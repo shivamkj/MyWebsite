@@ -1,21 +1,21 @@
 import Head from "next/head";
 import config from "../config";
 
-const Home = () => {
+const NotFoundPage = () => {
   return (
     <>
       <Head>
-        <title>Shivam Kumar Jha</title>
+        <title>Not Found</title>
       </Head>
 
-      <main className="">
+      <div>
         <h1 className="text-2xl font-semibold text-center mt-8">
-          COOMING SOON
+          404 - Page Not Found
         </h1>
-      </main>
+      </div>
     </>
   );
 };
 
 export { config };
-export default Home;
+export default NotFoundPage;
