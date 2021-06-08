@@ -1,7 +1,7 @@
 import Head from "next/head";
 import config from "../config";
 
-const Home = () => {
+const HomePage = () => {
   return (
     <>
       <Head>
@@ -18,4 +18,4 @@ const Home = () => {
 };
 
 export { config };
-export default Home;
+export default HomePage;
