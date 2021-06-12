@@ -1,35 +1,43 @@
 import Head from "next/head";
+import readDirectory from "../../utils/readDirectory";
+import readContent from "../../utils/readContent";
 
-const BlogPage = ({ params }) => {
+const BlogPage = ({ params: { data, content } }) => {
   return (
     <>
       <Head>
-        <title>Blog</title>
+        <title>{data.title}</title>
       </Head>
 
-      <main>
-        <h1 className="text-2xl">{params}</h1>
-      </main>
+      <main
+        className="mt-8 mx-auto prose prose-indigo"
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
     </>
   );
 };
 
 export default BlogPage;
 
-export async function getStaticProps({ params }) {
-  return {
-    props: {
-      params: params.slug,
-    },
-  };
-}
+// Async Version
+// export const getStaticProps = ({ params: { slug } }) => {
+//   return new Promise((resolve, reject) => {
+//     const filePath = "./content/" + slug.join("/") + ".md";
 
-export async function getStaticPaths() {
-  return {
-    paths: [
-      { params: { slug: ["sample"] } },
-      { params: { slug: ["go", "getting-started"] } },
-    ],
-    fallback: false,
-  };
-}
+//     readContent(filePath)
+//       .then((params) => resolve({ props: { params } }))
+//       .catch((err) => reject(err));
+//   });
+// };
+
+// Sync Version
+export const getStaticProps = ({ params: { slug } }) => {
+  const filePath = "./content/" + slug.join("/") + ".md";
+  const params = readContent(filePath);
+  return { props: { params } };
+};
+
+export const getStaticPaths = async () => ({
+  paths: await readDirectory("./content/"),
+  fallback: false,
+});

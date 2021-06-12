@@ -1,11 +1,15 @@
 const colors = require("tailwindcss/colors");
+const typography = require("./typography-styles");
 
 module.exports = {
-  purge: ["./pages/*.{js,ts}", "./components/*.{js,ts}"],
-  mode: "jit",
+  // purge: ["./pages/*.{js,ts}", "./components/*.{js,ts}"],
+  // mode: "jit",
   darkMode: false,
+
   theme: {
-    extend: {},
+    extend: {
+      typography: { DEFAULT: typography },
+    },
     colors: {
       transparent: "transparent",
       current: "currentColor",
@@ -24,5 +28,9 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/typography")({
+      modifiers: ["sm", "lg"],
+    }),
+  ],
 };
