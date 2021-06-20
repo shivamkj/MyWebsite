@@ -1,8 +1,8 @@
 const colors = require("tailwindcss/colors");
-const typography = require("./typography-styles");
+const typography = require("./tailwind.typography");
 
 module.exports = {
-  // purge: ["./pages/*.{js,ts}", "./components/*.{js,ts}"],
+  purge: ["./pages/**/*.{js,jsx}", "./components/**/*.{js,jsx}"],
   // mode: "jit",
   darkMode: false,
 

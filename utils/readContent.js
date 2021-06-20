@@ -1,22 +1,31 @@
-import { readFileSync } from "fs";
-import matter from "gray-matter";
-import hljs from "highlight.js";
-import marked from "marked";
+const { readFile, readFileSync } = require("fs");
+const matter = require("gray-matter");
+const parseMarkdown = require("./markdown");
 
-marked.setOptions({
-  highlight: (code, lang) => hljs.highlight(code, { language: lang }).value,
-  headerIds: false,
-});
-
-const readContent = (filePath) => {
+const readContentSync = (filePath) => {
   const fileContent = readFileSync(filePath, "utf-8").toString();
 
   const { data, content } = matter(fileContent);
   // Convert date to string to avoid SerializableError in nextjs
   if (typeof data.date == "object") data.date = data.date.toISOString();
-  const finalContent = marked(content);
+  const parsedContent = parseMarkdown(content);
 
-  return { data, content: finalContent };
+  return { data, content: parsedContent };
 };
 
-export default readContent;
+const readContent = (filePath) => {
+  return new Promise((resolve, reject) => {
+    readFile(filePath, (err, fileContent) => {
+      if (err) reject(err);
+
+      const { data, content } = matter(fileContent);
+      // Convert date to string to avoid SerializableError in nextjs
+      if (typeof data.date == "object") data.date = data.date.toISOString();
+      const parsedContent = parseMarkdown(content);
+
+      resolve({ data, content: parsedContent });
+    });
+  });
+};
+
+module.exports = { readContent, readContentSync };

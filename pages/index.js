@@ -1,12 +1,10 @@
-import Head from "next/head";
+import Head from "../components/Head";
 import config from "../config";
 
 const HomePage = () => {
   return (
     <>
-      <Head>
-        <title>Shivam Kumar Jha</title>
-      </Head>
+      <Head type="page" info={{ title: "Home - Shivam Kumar Jha" }} />
 
       <main className="">
         <h1 className="text-2xl font-semibold text-center mt-8">

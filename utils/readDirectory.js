@@ -1,4 +1,4 @@
-import { readdir } from "fs/promises";
+const { readdir } = require("fs/promises");
 
 const allFiles = [];
 
@@ -20,4 +20,4 @@ const readDirectory = async (directory, previous = []) => {
   return allFiles;
 };
 
-export default readDirectory;
+module.exports = readDirectory;
